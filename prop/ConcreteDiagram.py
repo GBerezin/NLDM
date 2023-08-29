@@ -14,7 +14,7 @@ def Getdiag(congrade, data, Conc):
     gb3 = data['gb3'][0]
     Eb = dc['E']
     s = [dc['Rb'] * gb3, dc['Rb'] * 0.6 * gb3, dc['Rbt'] * 0.6 * kt, dc['Rbt'] * kt]
-    e = [dc['eb2'], dc['eb0'], s[1] / Eb, s[2] / Eb, dc['ebt0'], dc['ebt2']]
+    e = [dc['eb2'], dc['eb0'], s[1] / Eb, s[2] / Eb * kt, dc['ebt0'] * kt, dc['ebt2'] * kt]
     return e, s, Eb
 
 
