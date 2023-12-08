@@ -27,7 +27,7 @@ def sxyb(K, orientation, Sb):
     return Sxyb
 
 
-def conc(u, v01, v10, plb, K, vsigmab, e_b, s_b, Eb_, E_b):
+def conc(u, v01, v10, plb, K, vsigmab, e_b, s_b, E_b):
     vv = 1 - v01 * v10
     epsb = (plb @ u).reshape(K, 3, 1)
     exx = epsb[:, 0].reshape(K)
@@ -46,13 +46,13 @@ def conc(u, v01, v10, plb, K, vsigmab, e_b, s_b, Eb_, E_b):
             kRb[i] = 1.0 / (0.8 + 100 * eps1[i])
         else:
             kRb[i] = 1.0
-    Sb = np.vstack((vsigmab(eps1, *e_b, *s_b, Eb_), vsigmab(eps2, *e_b, *s_b, Eb_))).transpose().reshape(K, 2, 1)
+    Sb = np.vstack((vsigmab(eps1, *e_b, *s_b, E_b[:,0]), vsigmab(eps2, *e_b, *s_b, E_b[:,0]))).transpose().reshape(K, 2, 1)
     vb = v_b(K, Sb, eps1, eps2, E_b)
     Sxyb = sxyb(K, orientation, Sb)
     return vb, Sb, Sxyb, orientation, eps1, eps2
 
 
-def cQb(E_b, v01, K, Eb_):
+def cQb(E_b, v01, K):
     Qb = np.zeros((K, 3, 3))
     G01 = np.zeros(K)
     v10 = np.zeros(K)
@@ -61,7 +61,7 @@ def cQb(E_b, v01, K, Eb_):
             v10[i] = E_b[i, 1] * v01[i] / E_b[i, 0]
         else:
             v10[i] = 0.0
-        G01[i] = Eb_[i] / (2 * (1 + v10[i]))
+        G01[i] = E_b[i][0] / (2 * (1 + v10[i]))
     v01 = v10
     vv = 1 - v01 * v10
     Qb[:, 0, 0] = E_b[:, 0] / vv
@@ -133,10 +133,10 @@ def reb(u, ns, pls, alpha, vsigmas, e_s, s_s, E_s):
     return vs, Sxys, strain, stress
 
 
-def d(E_b, Eb_, K, vb, E_s, vs, orientation, v01, t, Zb, ns, alpha, As, Zs):
+def d(E_b, K, vb, E_s, vs, orientation, v01, t, Zb, ns, alpha, As, Zs):
     """Жесткостные характеристики плоских выделенных элементов жб оболочек."""
 
-    Qb, v01, v10 = cQb(E_b * vb, v01, K, Eb_)
+    Qb, v01, v10 = cQb(E_b * vb, v01, K)
     T = cT(orientation)
     Db = cD(t, Zb, T, Qb)
     Qs = np.zeros((ns, 3, 3))

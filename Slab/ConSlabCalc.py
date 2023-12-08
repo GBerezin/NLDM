@@ -57,7 +57,7 @@ def slab(data, reb, loads, t, Zb):
         pl2 = np.eye(3) * Zs[i]
         pls[i, :, :] = np.hstack((pl1, pl2))
     v01 = v0_1
-    args = [v01, K, E_b, Eb_, plb, E_s, pls, Fg, t, Zb, ns, alpha, As, Zs, vsigmab, vsigmas, e_b, s_b, e_s, s_s]
+    args = [v01, K, E_b, plb, E_s, pls, Fg, t, Zb, ns, alpha, As, Zs, vsigmab, vsigmas, e_b, s_b, e_s, s_s]
     eps1, eps2, Sig1, Sig2, Sxyb, Sxys, orientation, strain, stress, eps, Sig, u = itrn(*args)
     result = rslt(orientation, alpha, Zb, K, eps1, eps2, Sig1, Sig2, t, Zs, ns, strain, stress, As)
     cvrg = converg(Fg, Zb, Zs, Sxyb, Sxys, t, As, u)
@@ -95,14 +95,14 @@ def slab(data, reb, loads, t, Zb):
     CSch.stress(Z, df, rstress)
 
 
-def itrn(v01, K, E_b, Eb_, plb, E_s, pls, Fg, t, Zb, ns, alpha, As, Zs, vsigmab, vsigmas, e_b, s_b, e_s, s_s):
+def itrn(v01, K, E_b, plb, E_s, pls, Fg, t, Zb, ns, alpha, As, Zs, vsigmab, vsigmas, e_b, s_b, e_s, s_s):
     """Итерации."""
 
     acc = 0.0000001
     orientation = np.zeros(K)
     vb = np.ones((K, 2))
     vs = np.ones(ns)
-    D, v01, v10 = sl.d(E_b, Eb_, K, vb, E_s, vs, orientation, v01, t, Zb, ns, alpha, As, Zs)
+    D, v01, v10 = sl.d(E_b, K, vb, E_s, vs, orientation, v01, t, Zb, ns, alpha, As, Zs)
     u = clc.calc(D, Fg)
     Sb = np.zeros(K)
     eps1 = np.zeros(K)
@@ -115,9 +115,9 @@ def itrn(v01, K, E_b, Eb_, plb, E_s, pls, Fg, t, Zb, ns, alpha, As, Zs, vsigmab,
     it = 0
     while du >= acc:
         it += 1
-        vb, Sb, Sxyb, orientation, eps1, eps2 = sl.conc(u, v01, v10, plb, K, vsigmab, e_b, s_b, Eb_, E_b)
+        vb, Sb, Sxyb, orientation, eps1, eps2 = sl.conc(u, v01, v10, plb, K, vsigmab, e_b, s_b, E_b)
         vs, Sxys, strain, stress = sl.reb(u, ns, pls, alpha, vsigmas, e_s, s_s, E_s)
-        D, v01, v10 = sl.d(E_b, Eb_, K, vb, E_s, vs, orientation, v01, t, Zb, ns, alpha, As, Zs)
+        D, v01, v10 = sl.d(E_b, K, vb, E_s, vs, orientation, v01, t, Zb, ns, alpha, As, Zs)
         u_f = clc.calc(D, Fg)
         du = np.max(abs(u - u_f))
         u = u_f
