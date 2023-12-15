@@ -34,7 +34,7 @@ def slab(data, reb, loads, t, Zb):
     v = data['v'].values[0]
     v0_1 = np.ones(K) * v
     e_b, s_b, Eb = CD.Getdiag(data['Concrete'].values[0], data, Conc)
-    sigmab = vsigmab(e_b, *e_b, *s_b, Eb)
+    sigmab = vsigmab(e_b, *e_b, *s_b, Eb, 1)
     Eb_ = np.linspace(Eb, Eb, K)
     E_b = np.stack((Eb_, Eb_), axis=-1)
     vsigmas = np.vectorize(RD.Sigma)

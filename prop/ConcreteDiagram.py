@@ -30,10 +30,12 @@ def Strainstress(x, y, gr):
     plt.show()
 
 
-def Sigma(e, eb2, eb0, eb1, ebt1, ebt0, ebt2, Rb, Sb1, Sbt1, Rbt, E):
+def Sigma(e, eb2, eb0, eb1, ebt1, ebt0, ebt2, Rb, Sb1, Sbt1, Rbt, E, kRb):
     """Функция диаграммы состояния бетона."""
 
-    if eb0 >= e >= eb2:
+    Rb = Rb * kRb
+    Sb1 = Sb1 * kRb
+    if eb0 >= e:
         S = Rb
     elif eb0 < e < eb1:
         S = ((1 - Sb1 / Rb) * (e - eb1) / (eb0 - eb1) + Sb1 / Rb) * Rb
@@ -43,7 +45,7 @@ def Sigma(e, eb2, eb0, eb1, ebt1, ebt0, ebt2, Rb, Sb1, Sbt1, Rbt, E):
         S = E * e
     elif ebt1 < e < ebt0 and Rbt != 0.0:
         S = ((1 - Sbt1 / Rbt) * (e - ebt1) / (ebt0 - ebt1) + Sbt1 / Rbt) * Rbt
-    elif ebt0 <= e <= ebt2:
+    elif ebt0 <= e:
         S = Rbt
     else:
         S = 0.0

@@ -42,11 +42,11 @@ def conc(u, v01, v10, plb, K, vsigmab, e_b, s_b, E_b):
     orientation = 0.5 * np.arctan2(gxy, ee2)
     kRb = np.ones(K)
     for i in range(0, K):
-        if eps1[i] > 0.002:
+        if eps1[i] > 0.002 and eps2[i] < 0:
             kRb[i] = 1.0 / (0.8 + 100 * eps1[i])
         else:
             kRb[i] = 1.0
-    Sb = np.vstack((vsigmab(eps1, *e_b, *s_b, E_b[:,0]), vsigmab(eps2, *e_b, *s_b, E_b[:,0]))).transpose().reshape(K, 2, 1)
+    Sb = np.vstack((vsigmab(eps1, *e_b, *s_b, E_b[:,0], 1), vsigmab(eps2, *e_b, *s_b, E_b[:,0], kRb[i]))).transpose().reshape(K, 2, 1)
     vb = v_b(K, Sb, eps1, eps2, E_b)
     Sxyb = sxyb(K, orientation, Sb)
     return vb, Sb, Sxyb, orientation, eps1, eps2

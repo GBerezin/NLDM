@@ -30,11 +30,11 @@ def Strainstress(x, y, gr):
 
 def Sigma(e, esc2, esc0, es0, es2, Rsc, Rs, E):
     """Функция диаграммы состояния арматурной стали."""
-    if esc0 >= e >= esc2:
+    if esc0 >= e:
         S = Rsc
     elif esc0 < e < es0:
         S = E * e
-    elif es0 <= e <= es2:
+    elif es0 <= e:
         S = Rs
     else:
         S = 0.0

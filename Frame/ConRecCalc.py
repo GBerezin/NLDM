@@ -21,7 +21,7 @@ def rect(data, reb, loads, Xbi, Ybi, Abi, Zb, ci, A, Ix, Iy):
     vsigmab = np.vectorize(CD.Sigma)
     Conc = dat.db(con, 'concrete')
     e_b, s_b, Eb = CD.Getdiag(data['Concrete'].values[0], data, Conc)
-    sigmab = vsigmab(e_b, *e_b, *s_b, Eb)
+    sigmab = vsigmab(e_b, *e_b, *s_b, Eb, 1)
     vsigmas = np.vectorize(RD.Sigma)
     Reb = dat.db(con, 'rebarsteel')
     con.close()
@@ -44,7 +44,7 @@ def rect(data, reb, loads, Xbi, Ybi, Abi, Zb, ci, A, Ix, Iy):
     D = fr.d(Abi, Xbi, Ybi, Ebi, vbi) + fr.d(Asj, Xsj, Ysj, Esj, vsj)
     u = clc.calc(D, F)
     eb = Zb.dot(u)
-    sb = vsigmab(eb, *e_b, *s_b, Ebi)
+    sb = vsigmab(eb, *e_b, *s_b, Ebi, 1)
     es = Zs.dot(u)
     ss = np.zeros(ns)
     for i in range(ns):
@@ -60,7 +60,7 @@ def rect(data, reb, loads, Xbi, Ybi, Abi, Zb, ci, A, Ix, Iy):
         u_f = clc.calc(D, F)
         eb = Zb.dot(u_f)
         es = Zs.dot(u_f)
-        sb = vsigmab(eb, *e_b, *s_b, Ebi)
+        sb = vsigmab(eb, *e_b, *s_b, Ebi, 1)
         for i in range(ns):
             ss[i] = RD.Sigma(es[i], *e_s[i, :, :][0], *s_s[i, :, :][0], Esj[i])
         du = np.max(abs(u - u_f))
