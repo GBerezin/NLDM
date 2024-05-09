@@ -6,8 +6,6 @@ from scipy.interpolate import griddata
 from matplotlib.path import Path
 from matplotlib.patches import PathPatch
 
-plt.style.use('seaborn-whitegrid')
-
 
 def strain2D(eb, es, Xbi, Ybi, Xsj, Ysj, Asj, ci):
     """Относительные деформации в железобетонном сечении."""

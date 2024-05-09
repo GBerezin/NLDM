@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 
 '''Функции для бетона'''
 
-plt.style.use('seaborn-whitegrid')
-
 
 def Getdiag(congrade, data, Conc):
     """Характеристики бетона для диаграммы состояния."""

@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 
 '''Функции для арматуры'''
 
-plt.style.use('seaborn-whitegrid')
-
 
 def Getdiag(rebgrade, Reb):
     """Характеристики арматуры для диаграммы состояния."""
