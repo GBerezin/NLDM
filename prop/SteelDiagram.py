@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import data as dat
 
-plt.style.use('seaborn-whitegrid')
 
 
 def Getdiag(stgrade):

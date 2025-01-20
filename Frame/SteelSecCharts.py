@@ -5,7 +5,6 @@ from matplotlib.path import Path
 from matplotlib.patches import PathPatch
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 
-plt.style.use('seaborn-whitegrid')
 
 
 def strain2D(z, x, y, ci, pi):
