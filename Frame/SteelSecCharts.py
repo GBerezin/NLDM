@@ -27,8 +27,6 @@ def strain2D(z, x, y, ci, pi):
     clippath = Path(np.c_[x[clipindex], y[clipindex]])
     patch = PathPatch(clippath, facecolor='none', edgecolor='k')
     ax.add_patch(patch)
-    for col in cont.collections:
-        col.set_clip_path(patch)
     plt.colorbar(cont)
     for i in range(0, 12):
         ax.annotate(i + 1, (x[pi[i]], y[pi[i]]), size=10, xytext=(
@@ -74,8 +72,6 @@ def stress2D(z, x, y, ci, pi):
     clippath = Path(np.c_[x[clipindex], y[clipindex]])
     patch = PathPatch(clippath, facecolor='none', edgecolor='k')
     ax.add_patch(patch)
-    for col in cont.collections:
-        col.set_clip_path(patch)
     plt.colorbar(cont)
     for i in range(0, 12):
         ax.annotate(i + 1, (x[pi[i]], y[pi[i]]), size=10, xytext=(

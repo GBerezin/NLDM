@@ -34,8 +34,6 @@ def strain2D(eb, es, Xbi, Ybi, Xsj, Ysj, Asj, ci):
     clippath = Path(np.c_[Xbi[clipindex], Ybi[clipindex]])
     patch = PathPatch(clippath, facecolor='none', edgecolor='k')
     ax.add_patch(patch)
-    for col in cont.collections:
-        col.set_clip_path(patch)
     xr = Xsj
     yr = Ysj
     zr = es
@@ -84,8 +82,6 @@ def stress2D(sb, ss, Xbi, Ybi, Xsj, Ysj, Asj, ci):
     clippath = Path(np.c_[Xbi[clipindex], Ybi[clipindex]])
     patch = PathPatch(clippath, facecolor='none', edgecolor='k')
     ax.add_patch(patch)
-    for col in cont.collections:
-        col.set_clip_path(patch)
     xr = Xsj
     yr = Ysj
     zr = ss
